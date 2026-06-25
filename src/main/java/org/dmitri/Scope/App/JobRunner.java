@@ -1,13 +1,21 @@
 package org.dmitri.Scope.App;
 
-public class JobRunner {
-    private final TaskContext taskContext;
+import org.springframework.beans.factory.ObjectProvider;
 
-    public JobRunner(TaskContext taskContext) {
-        this.taskContext = taskContext;
+public class JobRunner {
+//    private final TaskContext taskContext;
+    private final ObjectProvider<TaskContext> objectProvider;
+//
+    public JobRunner(ObjectProvider<TaskContext> objectProvider) {
+        this.objectProvider=objectProvider;
     }
 
+//    public JobRunner(TaskContext taskContext) {
+//        this.taskContext = taskContext;
+//    }
+
     public void runOnce() {
+        TaskContext taskContext = objectProvider.getObject();
         System.out.printf("Id task: %s%n", taskContext.getId());
     }
 }

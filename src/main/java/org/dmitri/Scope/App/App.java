@@ -7,10 +7,12 @@ public class App {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
 
-        JobRunner jobRunner1 = context.getBean(JobRunner.class);
-        JobRunner jobRunner2 = context.getBean(JobRunner.class);
-        jobRunner1.runOnce();
-        jobRunner2.runOnce();
+        JobRunner jobRunner = context.getBean(JobRunner.class);
+        jobRunner.runOnce();
+        jobRunner.runOnce();
+        jobRunner.runOnce();
+        jobRunner.runOnce();
+        jobRunner.runOnce();
         context.close();
     }
 }

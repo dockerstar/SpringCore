@@ -1,7 +1,7 @@
 package org.dmitri.Scope.App;
 
 public class TaskContext {
-    private Integer id = 0;
+    private static Integer id = 0;
 
     public TaskContext() {
         this.id++;

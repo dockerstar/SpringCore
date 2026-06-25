@@ -1,5 +1,6 @@
 package org.dmitri.Scope.App;
 
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -13,7 +14,12 @@ public class AppConfig {
     }
 
     @Bean
-    public JobRunner jobRunner(TaskContext taskContext) {
-        return new JobRunner(taskContext);
+    public JobRunner jobRunner(ObjectProvider<TaskContext> objectProvider) {
+        return new JobRunner(objectProvider);
     }
+
+//    @Bean
+//    public JobRunner jobRunner(TaskContext taskContext){
+//        return new JobRunner(taskContext);
+//    }
 }
