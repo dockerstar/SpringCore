@@ -1,10 +1,12 @@
 package org.dmitri.App.config;
 
+import org.dmitri.App.model.Command;
 import org.dmitri.App.repository.AccountRepository;
 import org.dmitri.App.repository.InMemoryAccountRepository;
 import org.dmitri.App.repository.InMemoryUserRepository;
 import org.dmitri.App.repository.UserRepository;
 import org.dmitri.App.service.AccountService;
+import org.dmitri.App.service.ConsoleListener;
 import org.dmitri.App.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,7 +39,14 @@ public class AppConfig {
 
     @Bean
     public AccountService accountService(UserRepository userRepository,
-                                         AccountRepository accountRepository) {
-        return new AccountService(userRepository, accountRepository);
+                                         AccountRepository accountRepository,
+                                         AccountProperties accountProperties) {
+        return new AccountService(userRepository, accountRepository, accountProperties);
+    }
+
+    @Bean
+    public ConsoleListener consoleListener(UserService userService,
+                                           AccountService accountService) {
+        return new ConsoleListener(userService, accountService);
     }
 }

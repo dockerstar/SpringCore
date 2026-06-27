@@ -8,17 +8,20 @@ import java.util.Map;
 import java.util.Objects;
 
 public class InMemoryAccountRepository implements AccountRepository {
-    private Integer count = 0;
-    private Map<Integer, Account> accountMap = new HashMap<>();
+    private final Map<Integer, Account> accountMap = new HashMap<>();
 
     @Override
     public void save(Account account) {
-        accountMap.put(count, account);
-        count++;
+        for (Map.Entry<Integer, Account> entry: accountMap.entrySet()) {
+            if (Objects.equals(entry.getValue().getId(), account.getId())) {
+                accountMap.putIfAbsent(account.getId() ,account);
+            }
+        }
+        accountMap.putIfAbsent(account.getId(), account);
     }
 
     @Override
-    public Account findById(Integer accountId) {
+    public Account findById(Integer accountId) throws NotFoundAccountException {
         for (Map.Entry<Integer, Account> entry: accountMap.entrySet()) {
             if (Objects.equals(entry.getValue().getId(), accountId)) {
                 return entry.getValue();
@@ -28,10 +31,11 @@ public class InMemoryAccountRepository implements AccountRepository {
     }
 
     @Override
-    public void delete(Integer accountId) {
+    public void delete(Integer accountId) throws NotFoundAccountException {
         boolean state = false;
         for (Map.Entry<Integer, Account> entry: accountMap.entrySet()) {
             if (Objects.equals(entry.getValue().getId(), accountId)) {
+
                 accountMap.remove(entry.getKey());
                 state = true;
             }

@@ -40,12 +40,12 @@ public class Account {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return Objects.equals(id, account.id) && Objects.equals(userId, account.userId) && Objects.equals(moneyAmount, account.moneyAmount);
+        return Objects.equals(id, account.id) && Objects.equals(userId, account.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, moneyAmount);
+        return Objects.hash(id, userId);
     }
 
     @Override
