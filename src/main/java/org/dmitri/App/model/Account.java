@@ -28,10 +28,6 @@ public class Account {
         return moneyAmount;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
     public void setMoneyAmount(Integer moneyAmount) {
         this.moneyAmount = moneyAmount;
     }

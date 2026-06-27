@@ -32,16 +32,11 @@ public class InMemoryAccountRepository implements AccountRepository {
 
     @Override
     public void delete(Integer accountId) throws NotFoundAccountException {
-        boolean state = false;
-        for (Map.Entry<Integer, Account> entry: accountMap.entrySet()) {
-            if (Objects.equals(entry.getValue().getId(), accountId)) {
-
-                accountMap.remove(entry.getKey());
-                state = true;
-            }
-        }
-        if (!state) {
+        if (accountMap.containsKey(accountId)) {
+            accountMap.remove(accountId);
+        } else {
             throw new NotFoundAccountException("Аккаунт с таким id не найден в: " + InMemoryUserRepository.class.getSimpleName());
         }
+
     }
 }
