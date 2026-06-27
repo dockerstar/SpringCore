@@ -12,11 +12,6 @@ public class InMemoryAccountRepository implements AccountRepository {
 
     @Override
     public void save(Account account) {
-        for (Map.Entry<Integer, Account> entry: accountMap.entrySet()) {
-            if (Objects.equals(entry.getValue().getId(), account.getId())) {
-                accountMap.putIfAbsent(account.getId() ,account);
-            }
-        }
         accountMap.putIfAbsent(account.getId(), account);
     }
 

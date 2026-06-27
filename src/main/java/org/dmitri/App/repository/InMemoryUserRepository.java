@@ -6,13 +6,11 @@ import org.dmitri.App.model.User;
 import java.util.*;
 
 public class InMemoryUserRepository implements UserRepository {
-    private Integer count = 0;
     private final Map<Integer, User> userMap = new HashMap<>();
 
     @Override
     public void save(User user) {
-        userMap.put(count, user);
-        count++;
+        userMap.put(user.getId(), user);
     }
 
     @Override
