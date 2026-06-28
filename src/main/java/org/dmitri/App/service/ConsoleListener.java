@@ -4,6 +4,7 @@ import org.dmitri.App.exception.*;
 import org.dmitri.App.model.Command;
 import org.dmitri.App.model.User;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,13 +25,13 @@ public class ConsoleListener {
                 switch (inputCommand) {
                     case "USER_CREATE" -> {
                         System.out.print("Input login: ");
-                        String login = scanner.nextLine();
+                        String login = checkNotNullLine(scanner.nextLine());
                         User user = userService.create(login);
                         System.out.println(user + "\n");
                     }
                     case "SHOW_ALL_USERS" -> {
                         List<User> userList = userService.findAll();
-                        userList.stream().forEach(System.out::println);
+                        userList.forEach(System.out::println);
                     }
                     case "ACCOUNT_CREATE" -> {
                         System.out.print("Введите id пользователя для кого вы хотите открыть счет: ");
@@ -79,8 +80,12 @@ public class ConsoleListener {
                 }
                 inputCommand = lineInput();
             } catch (UserAlreadyExistsException | NotFoundUserException | NotFoundAccountException |
-                     IncorrectAmountValueException | OneAccountUserException e) {
+                     IncorrectAmountValueException | OneAccountUserException | NotNullInputLineException e) {
                 System.out.println(e.getMessage());
+                scanner.nextLine();
+                inputCommand = lineInput();
+            } catch (InputMismatchException e) {
+                System.out.println("Введите число!");
                 scanner.nextLine();
                 inputCommand = lineInput();
             }
@@ -99,6 +104,14 @@ public class ConsoleListener {
         command();
         System.out.print("Input command: ");
         Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
+        return scanner.nextLine().trim();
+    }
+
+    public String checkNotNullLine(String line) throws NotNullInputLineException {
+        if (line.trim().equals("")) {
+            throw new NotNullInputLineException("Строка не должна быть пустой!");
+        } else {
+            return line;
+        }
     }
 }
