@@ -77,7 +77,7 @@ public class AccountService {
                     accountFrom,
                     accountTo);
         } else {
-            accountFrom.setMoneyAmount(accountFrom.getMoneyAmount()-(amountTransfer+(int)(amountTransfer*accountProperties.getTransferCommission())));
+            accountFrom.setMoneyAmount(accountFrom.getMoneyAmount()-amountTransfer);
             accountTo.setMoneyAmount(accountTo.getMoneyAmount()+(amountTransfer-(int)(amountTransfer*accountProperties.getTransferCommission())));
             accountRepository.save(accountFrom);
             accountRepository.save(accountTo);
