@@ -15,11 +15,7 @@ public class InMemoryUserRepository implements UserRepository {
 
     @Override
     public List<User> findAll() {
-        List<User> userList = new ArrayList<>();
-        for (Map.Entry<Integer, User> entry: userMap.entrySet()) {
-            userList.add(entry.getValue());
-        }
-        return userList;
+        return userMap.values().stream().toList();
     }
 
     @Override

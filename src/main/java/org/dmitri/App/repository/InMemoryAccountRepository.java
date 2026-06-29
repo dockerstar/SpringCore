@@ -17,10 +17,13 @@ public class InMemoryAccountRepository implements AccountRepository {
 
     @Override
     public Account findById(Integer accountId) throws NotFoundAccountException {
-        for (Map.Entry<Integer, Account> entry: accountMap.entrySet()) {
-            if (Objects.equals(entry.getValue().getId(), accountId)) {
-                return entry.getValue();
-            }
+//        for (Map.Entry<Integer, Account> entry: accountMap.entrySet()) {
+//            if (Objects.equals(entry.getValue().getId(), accountId)) {
+//                return entry.getValue();
+//            }
+//        }
+        if (accountMap.containsKey(accountId)) {
+            return accountMap.get(accountId);
         }
         throw new NotFoundAccountException("Аккаунт с таким id не найден в: " + InMemoryUserRepository.class.getSimpleName());
     }
